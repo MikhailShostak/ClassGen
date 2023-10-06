@@ -1,0 +1,77 @@
+Type: Class
+Events:
+  - InputParameters:
+      - Copy: false
+        Name: TypeName
+        Type: ClassGen.FileInfo
+        Writable: false
+    Name: Navigate
+Functions:
+  - InputParameters:
+      - Copy: false
+        Name: Path
+        Type: System.Path
+        Writable: false
+    Name: LoadFile
+    OutputParameters:
+      - Copy: false
+        Name: FileInfo
+        Type: ClassGen.FileInfo
+        Writable: false
+  - InputParameters:
+      - Copy: false
+        Name: FileInfo
+        Type: ClassGen.FileInfo
+        Writable: true
+      - Copy: false
+        Name: Data
+        Type: Serialization.Data
+        Writable: false
+    Name: LoadData
+    OutputParameters:
+      - Copy: false
+        Name: Success
+        Type: bool
+        Writable: false
+  - InputParameters:
+      - Copy: false
+        Name: Type
+        Type: ClassGen.TypeInfo
+        Writable: false
+    Name: FindEditor
+    OutputParameters:
+      - Copy: false
+        Name: Editor
+        Type: UniqueReference<ClassGen.PropertyEditor>
+        Writable: false
+Graphs:
+  Function.FindEditor:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+  Function.LoadData:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+  Function.LoadFile:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+Namespace: ClassGen
+Properties:
+  - Name: PropertyTypeEditors
+    Type: Map<String, ClassReference<ClassGen.PropertyEditor>>
+  - Name: PropertyInstanceEditors
+    Type: Map<String, ClassReference<ClassGen.PropertyEditor>>
+  - Name: FileEditors
+    Type: Map<String, ClassReference<ClassGen.FileEditor>>
+  - Name: Types
+    Type: Map<String, ClassReference<ClassGen.BaseInfo>>
+  - Name: Compilers
+    Type: Map<String, ClassReference<ClassGen.Compiler>>

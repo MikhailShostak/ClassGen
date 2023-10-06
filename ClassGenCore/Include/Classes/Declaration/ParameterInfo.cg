@@ -1,0 +1,21 @@
+Type: Class
+Attributes:
+  - Structure
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Type
+    Type: ClassGen.TypeInfo
+  - Attributes:
+      - Serialize
+    Name: Name
+    Type: String
+  - Attributes:
+      - Serialize
+    Name: Writable
+    Type: bool
+  - Attributes:
+      - Serialize
+    Name: Copy
+    Type: bool

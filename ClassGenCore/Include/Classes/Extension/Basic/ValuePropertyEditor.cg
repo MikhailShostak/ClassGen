@@ -1,0 +1,35 @@
+Type: Class
+BaseType: ClassGen.PropertyEditor
+Functions:
+  - InputParameters:
+      - Copy: false
+        Name: Data
+        Type: Serialization.Data
+        Writable: true
+    Name: SerializeProperty
+  - InputParameters:
+      - Copy: false
+        Name: Data
+        Type: Serialization.Data
+        Writable: false
+    Name: DeserializeProperty
+  - Name: Clear
+Graphs:
+  Function.DeserializeProperty:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+  Function.SerializeProperty:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+Namespace: ClassGen
+Properties:
+  - Name: Value
+    Type: ValueType
+TemplateTypes:
+  - ValueType

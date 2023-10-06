@@ -1,0 +1,44 @@
+Type: Class
+BaseType: ClassGen.BaseInfo
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: BaseType
+    Type: ClassGen.TypeInfo
+  - Attributes:
+      - Serialize
+    Name: Interfaces
+    Type: Array<ClassGen.TypeInfo>
+  - Attributes:
+      - Serialize
+    Name: Attributes
+    Type: Array<String>
+  - Attributes:
+      - Serialize
+    Name: TemplateTypes
+    Type: Array<String>
+  - Attributes:
+      - Serialize
+    Name: IndirectType
+    Type: ClassGen.TypeInfo
+  - Attributes:
+      - Serialize
+    Name: Properties
+    Type: Array<ClassGen.PropertyInfo>
+  - Attributes:
+      - Serialize
+    Name: Functions
+    Type: Array<ClassGen.FunctionInfo>
+  - Attributes:
+      - Serialize
+    Name: Events
+    Type: Array<ClassGen.EventInfo>
+  - Attributes:
+      - Serialize
+    Name: Graphs
+    Type: SortedMap<String, ClassGen.GraphInfo>
+  - Attributes:
+      - Serialize
+    Name: Values
+    Type: SortedMap<String, Serialization.Data>

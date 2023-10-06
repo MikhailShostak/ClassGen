@@ -1,0 +1,27 @@
+Type: Class
+Attributes:
+  - DeleteCopy
+Events:
+  - InputParameters:
+      - Copy: false
+        Name: FilePath
+        Type: System.Path
+        Writable: false
+    Name: MarkFileDirty
+Functions:
+  - Name: RenderFile
+Graphs:
+  Function.RenderFile:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+Namespace: ClassGen
+Properties:
+  - Name: Data
+    Type: ClassGen.FileInfo
+  - Name: Path
+    Type: System.Path
+  - Name: PropertyEditors
+    Type: Map<String, UniqueReference<ClassGen.PropertyEditor>>

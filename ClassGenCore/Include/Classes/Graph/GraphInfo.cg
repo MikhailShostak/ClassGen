@@ -1,0 +1,13 @@
+Type: Class
+Attributes:
+  - Structure
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Nodes
+    Type: Array<ClassGen.NodeInfo>
+  - Attributes:
+      - Serialize
+    Name: Connections
+    Type: Array<ClassGen.ConnectionInfo>

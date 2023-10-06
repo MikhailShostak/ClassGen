@@ -1,0 +1,25 @@
+Type: Class
+Attributes:
+  - Structure
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Name
+    Type: String
+  - Attributes:
+      - Serialize
+    Name: InputParameters
+    Type: Array<ClassGen.ParameterInfo>
+  - Attributes:
+      - Serialize
+    Name: OutputParameters
+    Type: Array<ClassGen.ParameterInfo>
+  - Attributes:
+      - Serialize
+    Name: ExecutionBranches
+    Type: Array<String>
+  - Attributes:
+      - Serialize
+    Name: Constant
+    Type: bool

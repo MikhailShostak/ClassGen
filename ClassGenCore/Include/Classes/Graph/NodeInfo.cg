@@ -1,0 +1,11 @@
+Type: Class
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: ID
+    Type: String
+  - Attributes:
+      - Serialize
+    Name: Name
+    Type: String

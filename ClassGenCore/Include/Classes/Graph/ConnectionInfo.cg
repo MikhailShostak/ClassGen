@@ -1,0 +1,13 @@
+Type: Class
+Attributes:
+  - Structure
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Source
+    Type: System.Path
+  - Attributes:
+      - Serialize
+    Name: Destination
+    Type: System.Path
