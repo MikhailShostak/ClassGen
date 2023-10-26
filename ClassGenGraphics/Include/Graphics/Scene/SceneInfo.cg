@@ -1,0 +1,20 @@
+Type: Class
+BaseType: ClassGen.BaseInfo
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Path
+    Type: System.Path
+  - Attributes:
+      - Serialize
+    Name: Name
+    Type: String
+  - Attributes:
+      - Serialize
+    Name: Systems
+    Type: Array<InstanceInfo>
+  - Attributes:
+      - Serialize
+    Name: Entities
+    Type: Array<ClassGen.EntityInfo>

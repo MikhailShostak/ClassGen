@@ -1,0 +1,37 @@
+Type: Class
+BaseType: ClassGen.BaseInfo
+Functions:
+  - InputParameters:
+      - Copy: false
+        Name: Context
+        Type: Graphics::GraphicsContext
+        Writable: true
+    Name: Load
+    OutputParameters:
+      - Copy: false
+        Name: Texture
+        Type: SharedReference<Graphics.Texture>
+        Writable: false
+Graphs:
+  Function.Load:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+Namespace: ClassGen
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Path
+    Type: System.Path
+  - Attributes:
+      - Serialize
+    Name: TextureFiltration
+    Type: Graphics.TextureFiltration
+  - Attributes:
+      - Serialize
+    Name: TextureWrapping
+    Type: Graphics.TextureWrapping
+  - Name: TextureInstance
+    Type: SharedReference<Graphics.Texture>

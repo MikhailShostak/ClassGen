@@ -1,0 +1,22 @@
+Type: Class
+BaseType: ClassGen.FileEditor
+Functions:
+  - Name: RenderFile
+  - InputParameters:
+      - Copy: false
+        Name: path
+        Type: System.Path
+        Writable: false
+      - Copy: false
+        Name: info
+        Type: ClassGen.MaterialInfo
+        Writable: true
+    Name: DrawMaterialGraph
+Namespace: ClassGen
+Properties:
+  - Name: Material
+    Type: SharedReference<Graphics.Material>
+  - Name: LastPath
+    Type: System.Path
+  - Name: PreviewViewport
+    Type: ClassGen.PreviewViewport

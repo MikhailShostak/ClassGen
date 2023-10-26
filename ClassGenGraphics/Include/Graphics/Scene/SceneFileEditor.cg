@@ -1,0 +1,22 @@
+Type: Class
+BaseType: ClassGen.FileEditor
+Functions:
+  - Name: RenderFile
+Namespace: ClassGen
+Properties:
+  - Name: Viewport
+    Type: SceneViewport
+  - Name: SystemInstances
+    Type: Map<String, SharedReference<ECS.System>>
+  - Name: SystemDataEditor
+    Type: ClassGen.ArrayPropertyEditor
+  - Name: ComponentDataEditor
+    Type: ClassGen.ArrayPropertyEditor
+  - Name: DataEditor
+    Type: ClassGen.ObjectPropertyEditor
+  - Name: Outdated
+    Type: bool
+  - Name: SimulationDataEditor
+    Type: ClassGen.ObjectPropertyEditor
+  - Name: Simulation
+    Type: bool

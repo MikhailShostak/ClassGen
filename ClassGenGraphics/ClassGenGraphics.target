@@ -1,0 +1,8 @@
+Type: Library
+PrecompileLocalHeaders: true
+PublicDependencies:
+  - Name: ClassGenCore
+  - Name: ClassGenEnumeration
+PublicIncludes:
+  - ClassGenCore.hpp
+  - ClassGenEnumeration.hpp
