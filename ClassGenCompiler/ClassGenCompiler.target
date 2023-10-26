@@ -1,5 +1,5 @@
 Type: Application
 PrivateIncludes:
-    - ClassGen.hpp
+    - ClassGenLibrary.hpp
 PrivateDependencies:
-    - Name: ClassGen
+    - Name: ClassGenLibrary
