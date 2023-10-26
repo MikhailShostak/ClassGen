@@ -4,7 +4,5 @@ Functions:
   - Name: Draw
 Namespace: ClassGen
 Properties:
-  - Name: PreviewTexture
-    Type: SharedReference<Graphics::Texture>
   - Name: ValuesEditor
     Type: ClassGen.ObjectPropertyEditor
