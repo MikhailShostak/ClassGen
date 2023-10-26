@@ -12,5 +12,10 @@ void ClassExtension::Load(ClassGen::ExtensionLibrary &Library)
     Library.FileEditors["Asset"] = Reflection::Find<ClassGen::AssetFileEditor>();
     Library.Compilers["Asset"] = Reflection::Find<ClassGen::AssetCompiler>();
     Library.PropertyTypeEditors["Asset"] = Reflection::Find<ClassGen::ObjectPropertyEditor>();
+
+    Library.Types["DataTable"] = Reflection::Find<ClassGen::AssetInfo>();
+    Library.FileEditors["DataTable"] = Reflection::Find<ClassGen::AssetFileEditor>();
+    Library.Compilers["DataTable"] = Reflection::Find<ClassGen::AssetCompiler>();
+    Library.PropertyTypeEditors["DataTable"] = Reflection::Find<ClassGen::ObjectPropertyEditor>();
 }
 }

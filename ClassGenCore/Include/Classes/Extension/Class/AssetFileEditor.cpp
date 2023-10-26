@@ -166,10 +166,114 @@ void AssetFileEditor::RenderDetails(const System::Path &path, ClassGen::AssetInf
     }
 }
 
+
+inline static ImGuiTableFlags DefaultTableFlags =
+ImGuiTableFlags_SizingFixedFit |
+ImGuiTableFlags_RowBg |
+ImGuiTableFlags_Borders |
+ImGuiTableFlags_Resizable |
+ImGuiTableFlags_Hideable;
+
 void AssetFileEditor::RenderData(const System::Path &path, ClassGen::AssetInfo &assetInfo)
 {
     //TODO: Check FileData
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+
+    auto assetFileInfo = FindClassByName(assetInfo.BaseType);
+    auto assetClassInfo = DynamicCast<ClassGen::ClassInfo>(assetFileInfo.Instance);
+
+    if (Data.Type == "DataTable")
+    {
+        if (assetClassInfo->Properties.empty())
+        {
+            ImGui::PopStyleVar();
+            return;
+        }
+        if (ImGui::BeginTable(fmt::format("##{}", fmt::ptr(&DataEditor)).data(), assetClassInfo->Properties.size() + 1, DefaultTableFlags))
+        {
+            for (const auto& p : assetClassInfo->Properties)
+            {
+                ImGui::TableSetupColumn(p.Name.data(), ImGuiTableColumnFlags_WidthFixed);
+            }
+            ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+            auto DataTableRows = Serialization::Deserialize<Array<Serialization::Data>>(assetInfo.Values["DataTable"]);
+            ImGui::TableHeadersRow();
+            static size_t selectedRow = 0;
+            size_t i = 0;
+            size_t rowToDelete = -1;
+            selectedRow = std::clamp<size_t>(selectedRow, 0, DataTableRows.size() - 1);
+            for (auto &Row : DataTableRows)
+            {
+                ImGui::TableNextRow();
+                auto Values = Serialization::Deserialize<Map<String, Serialization::Data>>(Row);
+                size_t j = 0;
+                for (auto& p : assetClassInfo->Properties)
+                {
+                    String text;
+                    ImGui::TableSetColumnIndex(j);
+                    auto it = Values.find(p.Name);
+                    if (it != Values.end())
+                    {
+                        text = Serialization::ToString(it->second);
+                        auto lines = Str::Split(text, "\n");
+                        if (lines.size() > 1)
+                        {
+                            text = lines[0] + "...";
+                        }
+                    }
+                    bool isSelected = selectedRow == i;
+                    if (ImGui::Selectable(fmt::format("{}##{}_{}", text, i, j).data(), &isSelected))
+                    {
+                        selectedRow = i;
+                        DataEditor.Changed = nullptr;
+                    }
+                    ++j;
+                }
+                ImGui::TableSetColumnIndex(j);
+                if (ImGui::Button(fmt::format("{}##{}", ICON_DELETE, i).data()))
+                {
+                    rowToDelete = i;
+                }
+                ++i;
+            }
+            ImGui::EndTable();
+            if (rowToDelete != -1)
+            {
+                DataTableRows.erase(DataTableRows.begin() + rowToDelete);
+                assetInfo.Values["DataTable"] = Serialization::Serialize(DataTableRows);
+                rowToDelete = -1;
+            }
+            if (ImGui::Button(ICON_ADD.data()))
+            {
+                DataTableRows.resize(DataTableRows.size() + 1);
+                assetInfo.Values["DataTable"] = Serialization::Serialize(DataTableRows);
+            }
+            //auto &row = DataTableRows[selectedRow];
+            //auto map = Serialization::Deserialize<Map<String, Serialization::Data>>(row);
+            if (!DataEditor.Changed)
+            {
+                DataEditor.Value.clear();
+                DataEditor.PropertyEditors.clear();
+                Serialization::Deserialize(DataTableRows[selectedRow], DataEditor.Value);
+                DataEditor.Changed = [&]()
+                {
+                    auto DataTableRows = Serialization::Deserialize<Array<Serialization::Data>>(assetInfo.Values["DataTable"]);
+                    DataTableRows[selectedRow] = Serialization::Serialize(DataEditor.Value);
+                    assetInfo.Values["DataTable"] = Serialization::Serialize(DataTableRows);
+                    MarkFileDirty(path);
+                };
+            }
+            DataEditor.TypeInfo = assetInfo.BaseType;
+            DataEditor.FileInfo = assetFileInfo;
+            DataEditor.ID = fmt::format("##PropertyValue{}", fmt::ptr(&DataEditor));
+
+            ImGui::Columns(2);
+            DataEditor.DrawAllProperties();
+            ImGui::Columns(1);
+        }
+        ImGui::PopStyleVar();
+        return;
+    }
 
     if (!DataEditor.Changed)
     {
@@ -181,7 +285,7 @@ void AssetFileEditor::RenderData(const System::Path &path, ClassGen::AssetInfo &
         };
     }
     DataEditor.TypeInfo = assetInfo.BaseType;
-    DataEditor.FileInfo = FindClassByName(DataEditor.TypeInfo);
+    DataEditor.FileInfo = assetFileInfo;
     DataEditor.ID = fmt::format("##PropertyValue{}", fmt::ptr(&DataEditor));
 
     ImGui::Columns(2);
@@ -193,7 +297,7 @@ void AssetFileEditor::RenderData(const System::Path &path, ClassGen::AssetInfo &
 void AssetFileEditor::RenderFile()
 {
     auto &fileInfo = Data;
-    auto &assetInfo = *std::dynamic_pointer_cast<ClassGen::AssetInfo>(fileInfo.Instance);
+    auto &assetInfo = *DynamicCast<ClassGen::AssetInfo>(fileInfo.Instance);
 
     if (ImGui::BeginTabBar("##ClassTabBarDetails"))
     {

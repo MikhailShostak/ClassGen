@@ -27,9 +27,27 @@ void AssetCompiler::Compile(const SharedReference<ClassGen::BaseInfo>& BaseInfo,
     }
 
     file << "\n";
-    file << "inline DynamicAsset<" << assetBaseType << "> " << assetName << " = { \"" << assetName << "\", [](auto &instance)\n{\n";
+
+    //TODO: optimize
+    auto fileInfo = FindClassByName(assetName, assetNamespace);
+    const bool isDataTable = fileInfo.Type == "DataTable";
+    if (isDataTable)
+    {
+        file << "inline DynamicAsset<Array<" << assetBaseType << ">> " << assetName << " = { \"" << assetName << "\", [](auto &instance)\n{\n";
+    }
+    else
+    {
+        file << "inline DynamicAsset<" << assetBaseType << "> " << assetName << " = { \"" << assetName << "\", [](auto &instance)\n{\n";
+    }
     file << "Serialization::FromString(R\"(\n";
-    file << Serialization::ToString(assetInfo.Values);
+    if (isDataTable)
+    {
+        file << Serialization::ToString(assetInfo.Values["DataTable"]);
+    }
+    else
+    {
+        file << Serialization::ToString(assetInfo.Values);
+    }
     file << "\n)\",\ninstance);\n} };\n";
 
     if (!assetNamespace.empty())
