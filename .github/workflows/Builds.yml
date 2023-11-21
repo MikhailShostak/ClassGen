@@ -2,9 +2,7 @@ name: Builds
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   workflow_dispatch:
 
 jobs:
@@ -18,6 +16,7 @@ jobs:
       matrix:
         os: [windows-latest]
         configuration: [Release, Debug]
+        linkage: [Static, Shared]
         include:
           - os: windows-latest
             setup_command: ../BuildTools/Setup.bat
@@ -69,3 +68,18 @@ jobs:
         USER: ${{ secrets.ARTIFACTORY_USER }}
         PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
       run: ${{ matrix.run_command }} conan remote login --password "%PASSWORD%" Artifactory "%USER%"
+
+    - name: Package ClassGenCore
+      run: ${{ matrix.tools_command }} Package --Target=ClassGenCore --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package ClassGenEnumeration
+      run: ${{ matrix.tools_command }} Package --Target=ClassGenEnumeration --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package ClassGenLibrary
+      run: ${{ matrix.tools_command }} Package --Target=ClassGenLibrary --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package ClassGenCompiler
+      run: ${{ matrix.tools_command }} Package --Target=ClassGenCompiler --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Deploy Dependencies
+      run: ${{ matrix.run_command }} conan upload -r Artifactory * -c
