@@ -23,3 +23,7 @@ Properties:
       - Serialize
     Name: Constant
     Type: bool
+  - Attributes:
+      - Serialize
+    Name: Abstract
+    Type: bool

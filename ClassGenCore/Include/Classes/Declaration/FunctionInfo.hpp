@@ -10,6 +10,7 @@ struct PUBLIC_API_EXPORT FunctionInfo
     Array<ClassGen::ParameterInfo> OutputParameters {};
     Array<String> ExecutionBranches {};
     bool Constant {};
+    bool Abstract {};
 
     template<typename T>
     void Serialize(T &&data)
@@ -19,6 +20,7 @@ struct PUBLIC_API_EXPORT FunctionInfo
         data["OutputParameters"] & OutputParameters;
         data["ExecutionBranches"] & ExecutionBranches;
         data["Constant"] & Constant;
+        data["Abstract"] & Abstract;
     }
 
     void Initialize()

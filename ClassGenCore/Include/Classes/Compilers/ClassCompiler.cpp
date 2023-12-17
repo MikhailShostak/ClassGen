@@ -214,12 +214,17 @@ void ClassCompiler::Compile(const SharedReference<ClassGen::BaseInfo>& BaseInfo,
             file << "    virtual " << resolveReturnType() << " " << f.Name << "(" << boost::join(parameters, ", ");
             if (f.Constant)
             {
-                file <<  ") const;\n";
+                file <<  ") const";
             }
             else
             {
-                file <<  ");\n";
+                file <<  ")";
             }
+            if (f.Abstract)
+            {
+                file << " = 0";
+            }
+            file << ";\n";
     }
 
     file << "\n";
